@@ -10,11 +10,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ping_handler(w http.ResponseWriter, r *http.Request) {
-  fmt.Fprintf(w, "pong")
+	fmt.Fprintf(w, "pong")
 }
 
 func main() {
 	http.HandleFunc("/", handler)
-  http.HandleFunc("/ping", ping_handler)
+	http.HandleFunc("/ping", ping_handler)
 	http.ListenAndServe(":8080", nil)
 }
