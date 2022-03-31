@@ -20,9 +20,13 @@ func main() {
 			"message": "pong",
 		})
 	})
+	
+	room := newRoom()
+	r.GET("/room", func(c *gin.Context) {
+		room.ServeHTTP(c.Writer, c.Request)
+	})
 
 	// チャットルームの開始
-	room := newRoom()
 	go room.run()
 
 	// listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
