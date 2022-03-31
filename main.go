@@ -1,25 +1,30 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
-	"github.com/matumoto1234/go-todo/chat"
+	"github.com/gin-gonic/gin"
 )
 
-func ping_handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "pong")
-}
-
 func main() {
-	handler := chat.TemplateHandler{Filename: "chat.html"}
-	http.Handle("/", &handler)
+	r := gin.Default()
+	r.LoadHTMLGlob("templates/*")
 
-	http.HandleFunc("/ping", ping_handler)
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "chat.html", gin.H{})
+	})
 
-	err := http.ListenAndServe(":8080", nil)
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+
+	// listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	err := r.Run(":8080")
+
 	if err != nil {
-		log.Fatal("ListenAndServe:", err)
+		log.Fatal("gin Run:", err)
 	}
 }
