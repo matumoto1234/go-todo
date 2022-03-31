@@ -8,8 +8,6 @@ import (
 	"text/template"
 )
 
-
-
 type templateHandler struct {
 	once sync.Once
 	filename string
