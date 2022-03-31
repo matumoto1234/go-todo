@@ -8,15 +8,15 @@ import (
 	"text/template"
 )
 
-type templateHandler struct {
-	once sync.Once
-	filename string
-	templ *template.Template
+type TemplateHandler struct {
+	once     sync.Once
+	Filename string
+	templ    *template.Template
 }
 
-func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (t *TemplateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	t.once.Do(func() {
-		target_file_path := filepath.Join("templates", t.filename)
+		target_file_path := filepath.Join("templates", t.Filename)
 		t.templ = template.Must(template.ParseFiles(target_file_path))
 	})
 
