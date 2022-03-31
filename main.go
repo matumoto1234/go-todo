@@ -21,6 +21,10 @@ func main() {
 		})
 	})
 
+	// チャットルームの開始
+	room := newRoom()
+	go room.run()
+
 	// listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 	err := r.Run(":8080")
 
